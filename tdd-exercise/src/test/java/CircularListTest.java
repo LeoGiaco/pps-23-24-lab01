@@ -1,8 +1,8 @@
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +92,30 @@ public class CircularListTest {
         assertEquals(value, list.previous().get());
     }
 
+    @Test // TODO: possible refactoring? (similar to forward version)
+    void testPreviousReturnsAllElementInOppositeOrder() {
+        final List<Integer> values = List.of(1,2,3);
+        for (int i = 0; i < values.size(); i++) {
+            list.add(values.get(i));
+        }
+        final List<Integer> readValues = new ArrayList<>(values.size());
+        for (int i = 0; i < values.size(); i++) {
+            readValues.add(list.previous().get());
+        }
+        Collections.reverse(readValues);
+        assertIterableEquals(values, readValues);
+    }
+
+    @Test
+    void testPreviousLoopsBack() {
+        final int value = 1;
+        list.add(value - 1);
+        list.add(value);
+        list.previous();
+        list.previous();
+        assertEquals(value, list.previous().get());
+    }
+
     @Test
     void testReset() {
         final int firstVal = 0;
@@ -105,5 +129,11 @@ public class CircularListTest {
         list.next();
         list.reset();
         assertEquals(firstVal, list.next().get());
+    }
+
+    @Test
+    void testSize() {
+        list.add(0);
+        assertEquals(1, list.size());
     }
 }

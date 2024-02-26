@@ -10,7 +10,8 @@ public class CircularListImpl implements CircularList {
 
     public CircularListImpl() {
         this.index = 0;
-        this.list = new LinkedList<Integer>();
+        this.list = new LinkedList<>();
+        list.iterator();
     }
 
     @Override
