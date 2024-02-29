@@ -19,6 +19,14 @@ public class CircularListWithIteratorTest {
     private static final int LIST_SIZE = 10;
     private CircularList list;
 
+
+    List<Integer> generateAndAddValuesToList(int numOfValues) {
+        return Stream.iterate(0, i -> i+1)
+                        .limit(numOfValues)
+                        .peek(value -> list.add(value))
+                        .toList();
+    }
+    
     @BeforeEach
     void beforeEach() {
         list = new CircularListImpl();
@@ -45,12 +53,7 @@ public class CircularListWithIteratorTest {
 
     @Test
     void testForwardIteratorReturnsCorrectValues() {
-        List<Integer> values = Stream.iterate(0, i -> i+1)
-                                    .limit(LIST_SIZE)
-                                    .toList();
-        for (int i = 0; i < LIST_SIZE; i++) {
-            list.add(values.get(i));
-        }
+        List<Integer> values = generateAndAddValuesToList(LIST_SIZE);
         Iterator<Integer> forwardIterator = list.forwardIterator();
         List<Integer> readValues = Stream.generate(forwardIterator::next)
                                         .limit(LIST_SIZE)
@@ -75,14 +78,9 @@ public class CircularListWithIteratorTest {
         assertThrows(NoSuchElementException.class, forwardIterator::next);
     }
 
-    @Test // TODO: possible refactoring (similar to forward version)
+    @Test
     void testBackwardIteratorReturnsCorrectValues() {
-        List<Integer> values = Stream.iterate(0, i -> i+1)
-                                    .limit(LIST_SIZE)
-                                    .toList();
-        for (int i = 0; i < LIST_SIZE; i++) {
-            list.add(values.get(i));
-        }
+        List<Integer> values = generateAndAddValuesToList(LIST_SIZE);
         Iterator<Integer> backwardIterator = list.backwardIterator();
         List<Integer> readValues = Stream.generate(backwardIterator::next)
                                         .limit(LIST_SIZE)

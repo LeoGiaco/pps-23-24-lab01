@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 public class CircularListImpl implements CircularList {
 
-    private List<Integer> list;
+    protected List<Integer> list;
 
     public CircularListImpl() {
         list = new LinkedList<>();
@@ -73,6 +73,6 @@ public class CircularListImpl implements CircularList {
                 }
                 return value;
             }
-        };    }
-    
+        };    
+    }
 }
