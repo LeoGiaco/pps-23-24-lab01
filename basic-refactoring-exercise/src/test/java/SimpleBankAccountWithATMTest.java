@@ -1,5 +1,6 @@
 import static example.model.SimpleBankAccountWithATM.FEE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ class SimpleBankAccountWithATMTest {
 
     private static final int AMOUNT = 100;
     private static final int WITHDRAW_AMOUNT = 50;
+    private static final int NEGATIVE_AMOUNT = -10;
     private AccountHolder accountHolder;
     private BankAccount bankAccount;
 
@@ -21,6 +23,8 @@ class SimpleBankAccountWithATMTest {
         accountHolder = new AccountHolder("Mario", "Rossi", 1);
         bankAccount = new SimpleBankAccountWithATM(accountHolder, 0);
     }
+
+
 
     @Test
     void testInitialBalance() {
@@ -40,6 +44,10 @@ class SimpleBankAccountWithATMTest {
         assertEquals(AMOUNT, bankAccount.getBalance());
     }
     
+    @Test
+    void testNegativeDepositThrows() {
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(accountHolder.getId(), NEGATIVE_AMOUNT));
+    }
     
     @Test
     void testWithdrawWithFee() {
@@ -53,5 +61,10 @@ class SimpleBankAccountWithATMTest {
         bankAccount.deposit(accountHolder.getId(), AMOUNT + FEE);
         bankAccount.withdraw(2, WITHDRAW_AMOUNT);
         assertEquals(AMOUNT, bankAccount.getBalance());
+    }
+
+    @Test
+    void testNegativeWithdrawThrows() {
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.withdraw(accountHolder.getId(), NEGATIVE_AMOUNT));
     }
 }

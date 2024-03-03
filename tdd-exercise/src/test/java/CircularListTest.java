@@ -133,7 +133,8 @@ public class CircularListTest {
 
     @Test
     void testSize() {
-        list.add(0);
+        int value = 0;
+        list.add(value);
         assertEquals(1, list.size());
     }
 }
