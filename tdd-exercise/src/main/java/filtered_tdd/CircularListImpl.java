@@ -8,7 +8,7 @@ public class CircularListImpl extends iterator_tdd.CircularListImpl implements C
     int currentPosition = 0;
 
     @Override
-    public Optional<Integer> filteredNext(Predicate<Integer> condition) {
+    public Optional<Integer> filteredNext(final Predicate<Integer> condition) {
         if (this.size() == 0) {
             return Optional.empty();
         }

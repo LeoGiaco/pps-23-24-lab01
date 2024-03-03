@@ -60,11 +60,11 @@ public class CircularListTest {
     @Test
     void testNextReturnsAllElementInCorrectOrder() {
         final List<Integer> values = List.of(1,2,3);
-        for (int i = 0; i < values.size(); i++) {
-            list.add(values.get(i));
+        for (Integer value : values) {
+            list.add(value);
         }
         final List<Integer> readValues = new ArrayList<>(values.size());
-        for (int i = 0; i < values.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             readValues.add(list.next().get());
         }
         assertIterableEquals(values, readValues);
@@ -92,14 +92,14 @@ public class CircularListTest {
         assertEquals(value, list.previous().get());
     }
 
-    @Test // TODO: possible refactoring? (similar to forward version)
+    @Test
     void testPreviousReturnsAllElementInOppositeOrder() {
         final List<Integer> values = List.of(1,2,3);
-        for (int i = 0; i < values.size(); i++) {
-            list.add(values.get(i));
+        for (Integer value : values) {
+            list.add(value);
         }
         final List<Integer> readValues = new ArrayList<>(values.size());
-        for (int i = 0; i < values.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             readValues.add(list.previous().get());
         }
         Collections.reverse(readValues);

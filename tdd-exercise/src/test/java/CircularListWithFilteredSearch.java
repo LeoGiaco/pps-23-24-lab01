@@ -15,31 +15,31 @@ public class CircularListWithFilteredSearch {
     static final Optional<Integer> EMPTY = Optional.empty();
     static final int NUM_OF_VALUES = 10;
 
-    void generateValues(int numOfValues) {
+    void generateValues(final int numOfValues) {
         for (int value = 0; value < numOfValues; value++) {
             list.add(value);
         }
     }
 
     @BeforeEach
-    void beforeEach() {
+    void testBeforeEach() {
         list = new CircularListImpl();
     }
 
     @Test
-    void failedSearchReturnsNothing() {
+    void testFailedSearchReturnsNothing() {
         assertEquals(EMPTY, list.filteredNext(val -> val == 0));
     }
 
     @Test
-    void successfulSearchReturnsValue() {
+    void testSuccessfulSearchReturnsValue() {
         int searchedValue = 4;
         generateValues(NUM_OF_VALUES);
         assertEquals(searchedValue, list.filteredNext(value -> value == searchedValue).get());
     }
 
     @Test
-    void filteredSearchLoops() {
+    void testFilteredSearchLoops() {
         Predicate<Integer> onlyEven = value -> value % 2 == 0;
         generateValues(NUM_OF_VALUES);
         for (int i = 0; i < NUM_OF_VALUES / 2; i++) {

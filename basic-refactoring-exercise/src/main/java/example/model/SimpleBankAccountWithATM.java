@@ -8,12 +8,12 @@ public class SimpleBankAccountWithATM extends SimpleBankAccount {
     }
 
     @Override
-    public void deposit(int userID, double amount) {
+    public void deposit(final int userID, final double amount) {
         super.deposit(userID, amount - FEE);
     }
 
     @Override
-    public void withdraw(int userID, double amount) {
+    public void withdraw(final int userID, final double amount) {
         super.withdraw(userID, amount + FEE);
     }
 }

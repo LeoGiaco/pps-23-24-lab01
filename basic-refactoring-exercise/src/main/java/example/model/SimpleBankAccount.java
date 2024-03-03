@@ -14,6 +14,7 @@ public class SimpleBankAccount implements BankAccount {
         this.holder = holder;
         this.balance = balance;
     }
+
     @Override
     public AccountHolder getHolder(){
         return this.holder;
@@ -24,8 +25,15 @@ public class SimpleBankAccount implements BankAccount {
         return this.balance;
     }
 
+    private void isAmountValid(final double amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit cannot be negative or zero.");
+        }
+    }
+
     @Override
     public void deposit(final int userID, final double amount) {
+        isAmountValid(amount);
         if (checkUser(userID)) {
             this.balance += amount;
         }
@@ -33,6 +41,7 @@ public class SimpleBankAccount implements BankAccount {
 
     @Override
     public void withdraw(final int userID, final double amount) {
+        isAmountValid(amount);
         if (checkUser(userID) && isWithdrawAllowed(amount)) {
             this.balance -= amount;
         }
